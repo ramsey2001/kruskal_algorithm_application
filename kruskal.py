@@ -477,40 +477,40 @@ else:
     ax = fig.add_subplot(111, projection='3d')
     colors = plt.cm.tab10(np.linspace(0, 1, len(serie_tv)))
     
-     for i, serie in enumerate(serie_tv):
-         ax.scatter(new_pos[i, 0], new_pos[i, 1], new_pos[i, 2], color=colors[i], s=100)
-         ax.text(new_pos[i, 0], new_pos[i, 1], new_pos[i, 2], serie, fontsize=9)
+    for i, serie in enumerate(serie_tv):
+        ax.scatter(new_pos[i, 0], new_pos[i, 1], new_pos[i, 2], color=colors[i], s=100)
+        ax.text(new_pos[i, 0], new_pos[i, 1], new_pos[i, 2], serie, fontsize=9)
     
-         ax.set_title('MDS 3D con matrice aggiornata')
+    ax.set_title('MDS 3D con matrice aggiornata')
+    
+    st.pyplot(fig)
 
-     st.pyplot(fig)
-
- # Calcola lo stress della nuova configurazione
- new_stress, _ = calculate_stress(dist_matrix, new_pos)
+# Calcola lo stress della nuova configurazione
+new_stress, _ = calculate_stress(dist_matrix, new_pos)
 st.write(f"**Stress della nuova configurazione:** {new_stress:.4f}")
 st.write(f"**Stress della configurazione originale (ultima iterazione):** {stress_values[-1]:.4f}")
 
 # Confronto tra la configurazione finale originale e quella nuova
 st.subheader("3.7 Confronto tra configurazioni MDS")
 
- # Visualizza entrambe le configurazioni su un unico grafico
- if n_dimensions == 2:
-     fig, ax = plt.subplots(figsize=(12, 8))
-     colors = plt.cm.tab10(np.linspace(0, 1, len(serie_tv)))
-     
+# Visualizza entrambe le configurazioni su un unico grafico
+if n_dimensions == 2:
+    fig, ax = plt.subplots(figsize=(12, 8))
+    colors = plt.cm.tab10(np.linspace(0, 1, len(serie_tv)))
+    
     # Configurazione finale originale (punti)
-     for i, serie in enumerate(serie_tv):
-         ax.scatter(positions[-1][i, 0], positions[-1][i, 1], color=colors[i], s=100, alpha=0.7, label=None)
-         ax.text(positions[-1][i, 0], positions[-1][i, 1], serie, fontsize=10, ha='center', va='bottom')
-     
-     # Nuova configurazione (cerchi)
-     for i, serie in enumerate(serie_tv):
-         ax.scatter(new_pos[i, 0], new_pos[i, 1], edgecolor=colors[i], facecolor='none', s=150, linewidth=2, label=serie)
-         ax.text(new_pos[i, 0], new_pos[i, 1], serie, fontsize=10, ha='center', va='top')
-     
+    for i, serie in enumerate(serie_tv):
+        ax.scatter(positions[-1][i, 0], positions[-1][i, 1], color=colors[i], s=100, alpha=0.7, label=None)
+        ax.text(positions[-1][i, 0], positions[-1][i, 1], serie, fontsize=10, ha='center', va='bottom')
+    
+    # Nuova configurazione (cerchi)
+    for i, serie in enumerate(serie_tv):
+        ax.scatter(new_pos[i, 0], new_pos[i, 1], edgecolor=colors[i], facecolor='none', s=150, linewidth=2, label=serie)
+        ax.text(new_pos[i, 0], new_pos[i, 1], serie, fontsize=10, ha='center', va='top')
+    
     # Connetti le posizioni con linee
-     for i, serie in enumerate(serie_tv):
-         ax.plot([positions[-1][i, 0], new_pos[i, 0]], [positions[-1][i, 1], new_pos[i, 1]], '--', color=colors[i], alpha=0.5)
+    for i, serie in enumerate(serie_tv):
+        ax.plot([positions[-1][i, 0], new_pos[i, 0]], [positions[-1][i, 1], new_pos[i, 1]], '--', color=colors[i], alpha=0.5)
     
     ax.set_title('Confronto tra configurazioni MDS')
     ax.grid(True, linestyle='--', alpha=0.7)
